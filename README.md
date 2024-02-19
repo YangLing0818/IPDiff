@@ -1,5 +1,9 @@
 # IPDiff-ICLR 2024
-Official implementation for [Protein-Ligand Interaction Prior for Binding-aware 3D Molecule Diffusion Models](https://openreview.net/forum?id=qH9nrMNTIW). [ICLR 2024]
+Official implementation for our ICLR 2024 paper [Protein-Ligand Interaction Prior for Binding-aware 3D Molecule Diffusion Models](https://openreview.net/forum?id=qH9nrMNTIW).
+
+The current repo only contains evaluation code, and we will update training and sampling code in **2024.2.21**.
+
+![Alt text](image.png)
 
 ## Environment
 Python 3.8
