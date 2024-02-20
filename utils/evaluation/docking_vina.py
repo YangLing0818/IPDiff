@@ -238,3 +238,28 @@ class VinaDockingTask(BaseDockingTask):
         score, pose = dock.dock(score_func='vina', mode=mode, exhaustiveness=exhaustiveness, save_pose=True, **kwargs)
         return [{'affinity': score, 'pose': pose}]
 
+
+# if __name__ == '__main__':
+#     lig_pdbqt = 'data/lig.pdbqt'
+#     mol_file = 'data/1a4k_ligand.sdf'
+#     a = PrepLig(mol_file, 'sdf')
+#     # mol_file = 'CC(=C)C(=O)OCCN(C)C'
+#     # a = PrepLig(mol_file, 'smi')
+#     a.addH()
+#     a.gen_conf()
+#     a.get_pdbqt(lig_pdbqt)
+#
+#     prot_file = 'data/1a4k_protein_chainAB.pdb'
+#     prot_dry = 'data/protein_dry.pdb'
+#     prot_pqr = 'data/protein.pqr'
+#     prot_pdbqt = 'data/protein.pdbqt'
+#     b = PrepProt(prot_file)
+#     b.del_water(prot_dry)
+#     b.addH(prot_pqr)
+#     b.get_pdbqt(prot_pdbqt)
+#
+#     dock = VinaDock(lig_pdbqt, prot_pdbqt)
+#     dock.get_box()
+#     dock.dock()
+    
+

@@ -2,6 +2,7 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 
+from datasets.pl_data import ProteinLigandData
 from utils import data as utils_data
 
 AROMATIC_FEAT_MAP_IDX = utils_data.ATOM_FAMILIES_ID['Aromatic']
@@ -122,7 +123,7 @@ class FeaturizeProteinAtom(object):
     def feature_dim(self):
         return self.atomic_numbers.size(0) + self.max_num_aa + 1
 
-    def __call__(self, data):
+    def __call__(self, data: ProteinLigandData):
         element = data.protein_element.view(-1, 1) == self.atomic_numbers.view(1, -1)  # (N_atoms, N_elements)
         amino_acid = F.one_hot(data.protein_atom_to_aa_type, num_classes=self.max_num_aa)
         is_backbone = data.protein_is_backbone.view(-1, 1).long()
@@ -147,7 +148,7 @@ class FeaturizeLigandAtom(object):
         else:
             return len(MAP_ATOM_TYPE_FULL_TO_INDEX)
 
-    def __call__(self, data):
+    def __call__(self, data: ProteinLigandData):
         element_list = data.ligand_element
         hybridization_list = data.ligand_hybridization
         aromatic_list = [v[AROMATIC_FEAT_MAP_IDX] for v in data.ligand_atom_feature]
@@ -163,7 +164,7 @@ class FeaturizeLigandBond(object):
     def __init__(self):
         super().__init__()
 
-    def __call__(self, data):
+    def __call__(self, data: ProteinLigandData):
         data.ligand_bond_feature = F.one_hot(data.ligand_bond_type - 1, num_classes=len(utils_data.BOND_TYPES))
         return data
 
@@ -173,7 +174,7 @@ class RandomRotation(object):
     def __init__(self):
         super().__init__()
 
-    def __call__(self,  data):
+    def __call__(self,  data: ProteinLigandData):
         M = np.random.randn(3, 3)
         Q, __ = np.linalg.qr(M)
         Q = torch.from_numpy(Q.astype(np.float32))

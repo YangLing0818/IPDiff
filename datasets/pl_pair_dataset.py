@@ -47,7 +47,7 @@ class PocketLigandPairDataset(Dataset):
         self.db.close()
         self.db = None
         self.keys = None
-
+        
     def _process(self):
         db = lmdb.open(
             self.processed_path,
@@ -84,7 +84,7 @@ class PocketLigandPairDataset(Dataset):
                     print('Skipping (%d) %s' % (num_skipped, ligand_fn, ))
                     continue
         db.close()
-
+    
     def __len__(self):
         if self.db is None:
             self._connect_db()
@@ -105,7 +105,7 @@ class PocketLigandPairDataset(Dataset):
         data.id = idx
         assert data.protein_pos.size(0) > 0
         return data
-
+        
 
 if __name__ == '__main__':
     import argparse

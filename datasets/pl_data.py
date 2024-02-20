@@ -73,7 +73,6 @@ def get_batch_connectivity_matrix(ligand_batch, ligand_bond_index, ligand_bond_t
         start_index -= batch_index_offset[batch_index]
         end_index -= batch_index_offset[batch_index]
         bond_type = ligand_bond_type[ligand_bond_batch == batch_index]
-        # NxN connectivity matrix where 0 means no connection and 1/2/3/4 means single/double/triple/aromatic bonds.
         connectivity_matrix = torch.zeros(batch_ligand_size[batch_index], batch_ligand_size[batch_index],
                                           dtype=torch.int)
         for s, e, t in zip(start_index, end_index, bond_type):

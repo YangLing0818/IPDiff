@@ -1,31 +1,49 @@
 # IPDiff-ICLR 2024
 Official implementation for our ICLR 2024 paper [Protein-Ligand Interaction Prior for Binding-aware 3D Molecule Diffusion Models](https://openreview.net/forum?id=qH9nrMNTIW).
 
-The current repo only contains evaluation code, and we will update training and sampling code in **2024.2.21**.
 
 ![Alt text](image.png)
 
-## Environment
-Python 3.8
+### Environment
 
-PyTorch 1.10.1
-
-CUDA 11.3
-
-PyTorch Geometric 2.0.4
-
-RDKit 2022.03.5
-
-```
-cd ./IPDiff
+```shell
 conda env create -f ipdiff.yaml
-# For Vina Docking
-pip install meeko==0.1.dev3 scipy pdb2pqr vina==1.2.2
-python -m pip install git+https://github.com/Valdes-Tresanco-MS/AutoDockTools_py3
+conda activate ipdiff
 ```
 
-## Training, Sampling and Evaluation
-To be updated in **2024.2.21**
+### Data and Preparation
+The data preparation follows [TargetDiff](https://arxiv.org/abs/2303.03543). For more details, please refer to [the repository of TargetDiff](https://github.com/guanjq/targetdiff?tab=readme-ov-file#data).
+
+### Path to Pretrained IPNet:
+
+```shell
+./pretrained_models
+```
+
+### Training
+
+```shell
+conda activate ipdiff
+python train.py
+```
+
+### Sampling
+
+```shell
+python sample_split.py --start_index 0 --end_index 99 --batch_size 25
+```
+
+### Evaluation
+
+```shell
+python eval_split.py --eval_start_index 0 --eval_end_index 99
+```
+
+### Calculate metrics
+
+```shell
+python cal_metrics_from_pt.py
+```
 
 ## Citation
 ```
