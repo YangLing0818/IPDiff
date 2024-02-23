@@ -47,11 +47,10 @@ python cal_metrics_from_pt.py
 
 ## Citation
 ```
-@inproceedings{
-huang2024proteinligand,
-title={Protein-Ligand Interaction Prior for Binding-aware 3D Molecule Diffusion Models},
-author={Zhilin Huang and Ling Yang and Xiangxin Zhou and Zhilong Zhang and Wentao Zhang and Xiawu Zheng and Jie Chen and Yu Wang and Bin CUI and Wenming Yang},
-booktitle={International Conference on Learning Representations},
-year={2024}
+@inproceedings{huang2024proteinligand,
+  title={Protein-Ligand Interaction Prior for Binding-aware 3D Molecule Diffusion Models},
+  author={Zhilin Huang and Ling Yang and Xiangxin Zhou and Zhilong Zhang and Wentao Zhang and Xiawu Zheng and Jie Chen and Yu Wang and Bin CUI and Wenming Yang},
+  booktitle={International Conference on Learning Representations},
+  year={2024}
 }
 ```
