@@ -14,9 +14,17 @@ conda activate ipdiff
 ### Data and Preparation
 The data preparation follows [TargetDiff](https://arxiv.org/abs/2303.03543). For more details, please refer to [the repository of TargetDiff](https://github.com/guanjq/targetdiff?tab=readme-ov-file#data).
 
-### Path to Pretrained IPNet:
+### ❗️❗️Path to Pretrained IPNet:
 
 ```shell
+./pretrained_models
+```
+
+### ❗️❗️Pretrained IPDiff:
+
+Download the pretrained model checkpoint of IPDiff from [pretrained-ipdiff](https://drive.google.com/drive/folders/1VaCvlRncFHQqvYV-FsUmxpoxIYRm2u_V?usp=sharing) and move it to this path:
+
+```
 ./pretrained_models
 ```
 
