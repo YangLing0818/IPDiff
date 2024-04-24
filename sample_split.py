@@ -126,6 +126,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, default=root_dir + '/configs/sampling.yml')
+    parser.add_argument('--train_config', type=str, default=root_dir + '/configs/training.yml')
     parser.add_argument('--device', type=str, default='cuda:0')
     parser.add_argument('--batch_size', type=int, default=25)
     parser.add_argument('--result_path', type=str, default=root_dir + '/sampled_results')
@@ -137,16 +138,17 @@ if __name__ == '__main__':
 
     # Load config
     config = misc.load_config(args.config)
+    train_config = misc.load_config(args.train_config)
     logger.info(config)
     misc.seed_all(config.sample.seed)
 
     # Load checkpoint
     ckpt = torch.load(config.model.checkpoint, map_location=args.device)
-    logger.info(f"Training Config: {ckpt['config']}")
+    logger.info(f"Training Config: {train_config}")
 
     # Transforms
     protein_featurizer = trans.FeaturizeProteinAtom()
-    ligand_atom_mode = ckpt['config'].data.transform.ligand_atom_mode
+    ligand_atom_mode = train_config.data.transform.ligand_atom_mode
     ligand_featurizer = trans.FeaturizeLigandAtom(ligand_atom_mode)
     transform = Compose([
         protein_featurizer,
@@ -156,7 +158,7 @@ if __name__ == '__main__':
 
     # Load dataset
     dataset, subsets = get_dataset(
-        config=ckpt['config'].data,
+        config=train_config.data,
         transform=transform
     )
     train_set, test_set = subsets['train'], subsets['test']
@@ -164,13 +166,13 @@ if __name__ == '__main__':
 
     # Load model
     model = ScorePosNet3D(
-        ckpt['config'].model,
+        train_config.model,
         protein_atom_feature_dim=protein_featurizer.feature_dim,
         ligand_atom_feature_dim=ligand_featurizer.feature_dim
     ).to(args.device)
     model.load_state_dict(ckpt['model'])
 
-    net_cond = BAPNet(ckpt_path=ckpt['config'].net_cond.ckpt_path, hidden_nf=ckpt['config'].net_cond.hidden_dim).to(args.device)
+    net_cond = BAPNet(ckpt_path=train_config.net_cond.ckpt_path, hidden_nf=train_config.net_cond.hidden_dim).to(args.device)
 
     logger.info(f'Successfully load the model! {config.model.checkpoint}')
 
@@ -185,7 +187,7 @@ if __name__ == '__main__':
             center_pos_mode=config.sample.center_pos_mode,
             sample_num_atoms=config.sample.sample_num_atoms,
             net_cond=net_cond,
-            cond_dim=ckpt['config'].model.cond_dim
+            cond_dim=train_config.model.cond_dim
         )
         result = {
             'data': data,
